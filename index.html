@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Student Task Management</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="container">
+      <header class="topbar">
+        <div>
+          <p class="eyebrow">College Dashboard</p>
+          <h1>Student Task Management</h1>
+        </div>
+        <button id="resetDataBtn" class="secondary-btn" type="button">
+          Reset Demo Data
+        </button>
+      </header>
+
+      <section class="stats" aria-label="Student overview">
+        <div class="stat-card">
+          <span>Total Students</span>
+          <strong id="totalStudents">0</strong>
+        </div>
+        <div class="stat-card">
+          <span>Pending Tasks</span>
+          <strong id="pendingTasks">0</strong>
+        </div>
+        <div class="stat-card">
+          <span>Completed</span>
+          <strong id="completedTasks">0</strong>
+        </div>
+      </section>
+
+      <main class="layout">
+        <section class="panel form-panel">
+          <h2 id="formTitle">Add New Student</h2>
+
+          <form id="studentForm">
+            <div class="form-grid">
+              <label>
+                <span>Student ID</span>
+                <input type="text" id="studentId" name="studentId" placeholder="e.g. S-102" required />
+              </label>
+
+              <label>
+                <span>Full Name</span>
+                <input type="text" id="name" name="name" placeholder="Enter name" required />
+              </label>
+
+              <label>
+                <span>Course</span>
+                <input type="text" id="course" name="course" placeholder="e.g. Computer Science" required />
+              </label>
+
+              <label>
+                <span>Year</span>
+                <select id="year" name="year">
+                  <option value="1st Year">1st Year</option>
+                  <option value="2nd Year">2nd Year</option>
+                  <option value="3rd Year">3rd Year</option>
+                  <option value="4th Year">4th Year</option>
+                </select>
+              </label>
+
+              <label>
+                <span>Task Title</span>
+                <input type="text" id="taskTitle" name="taskTitle" placeholder="Task name" required />
+              </label>
+
+              <label>
+                <span>Status</span>
+                <select id="status" name="status">
+                  <option value="Pending">Pending</option>
+                  <option value="In Progress">In Progress</option>
+                  <option value="Completed">Completed</option>
+                </select>
+              </label>
+
+              <label class="full-width">
+                <span>Due Date</span>
+                <input type="date" id="dueDate" name="dueDate" />
+              </label>
+            </div>
+
+            <div class="button-row">
+              <button type="submit" id="submitBtn">Add Student</button>
+              <button type="button" id="cancelEditBtn" class="secondary-btn hidden">Cancel</button>
+            </div>
+          </form>
+        </section>
+
+        <section class="panel table-panel">
+          <div class="table-header">
+            <h2>Student Records</h2>
+            <input type="search" id="searchInput" placeholder="Search by name, task, or ID" aria-label="Search students" />
+          </div>
+
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>ID</th>
+                  <th>Name</th>
+                  <th>Course</th>
+                  <th>Year</th>
+                  <th>Task</th>
+                  <th>Status</th>
+                  <th>Due</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody id="studentTableBody"></tbody>
+            </table>
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <script src="script.js"></script>
+  </body>
+</html>
