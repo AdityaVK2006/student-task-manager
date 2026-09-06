@@ -60,7 +60,7 @@ h1 {
 
 .stats {
   display: grid;
-  grid-template-columns: repeat(3, minmax(160px, 1fr));
+  grid-template-columns: repeat(4, minmax(140px, 1fr));
   gap: 18px;
   margin-bottom: 24px;
 }
@@ -86,6 +86,11 @@ h1 {
 
 .stat-card strong {
   font-size: clamp(1.8rem, 2vw, 2.4rem);
+}
+
+.overdue-stat strong,
+.overdue-label {
+  color: var(--danger);
 }
 
 .layout {
@@ -215,6 +220,17 @@ tbody td {
   padding: 14px 10px;
   border-top: 1px solid var(--border);
   vertical-align: middle;
+}
+
+.overdue-row td {
+  background: rgba(239, 68, 68, 0.035);
+}
+
+.overdue-label {
+  display: block;
+  margin-top: 4px;
+  font-size: 0.72rem;
+  font-weight: 700;
 }
 
 .badge {

@@ -72,6 +72,17 @@ function renderStats() {
   document.getElementById("completedTasks").textContent = students.filter(
     (student) => student.status === "Completed"
   ).length;
+  document.getElementById("overdueTasks").textContent = students.filter(isOverdue).length;
+}
+
+function isOverdue(student) {
+  if (!student.dueDate || student.status === "Completed") return false;
+
+  const now = new Date();
+  const today = [now.getFullYear(), now.getMonth() + 1, now.getDate()]
+    .map((value) => String(value).padStart(2, "0"))
+    .join("-");
+  return student.dueDate < today;
 }
 
 function matchSearch(student, query) {
@@ -104,7 +115,7 @@ function renderTable() {
   tableBody.innerHTML = filteredStudents
     .map(
       (student) => `
-        <tr>
+        <tr class="${isOverdue(student) ? "overdue-row" : ""}">
           <td>${student.studentId}</td>
           <td>${student.name}</td>
           <td>${student.course}</td>
@@ -115,7 +126,7 @@ function renderTable() {
               ${student.status}
             </span>
           </td>
-          <td>${student.dueDate || "-"}</td>
+          <td>${student.dueDate || "-"}${isOverdue(student) ? '<span class="overdue-label">Overdue</span>' : ""}</td>
           <td>
             <div class="action-btns">
               <button class="edit-btn" type="button" data-action="edit" data-id="${student.id}">Edit</button>
