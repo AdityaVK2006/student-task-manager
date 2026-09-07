@@ -36,15 +36,19 @@ const initialStudents = [
 let students = loadStudents();
 let editingId = null;
 
-const form = document.getElementById("studentForm");
-const formTitle = document.getElementById("formTitle");
-const submitBtn = document.getElementById("submitBtn");
-const cancelEditBtn = document.getElementById("cancelEditBtn");
-const tableBody = document.getElementById("studentTableBody");
-const searchInput = document.getElementById("searchInput");
-const resetDataBtn = document.getElementById("resetDataBtn");
+const form = typeof document !== "undefined" ? document.getElementById("studentForm") : null;
+const formTitle = typeof document !== "undefined" ? document.getElementById("formTitle") : null;
+const submitBtn = typeof document !== "undefined" ? document.getElementById("submitBtn") : null;
+const cancelEditBtn = typeof document !== "undefined" ? document.getElementById("cancelEditBtn") : null;
+const tableBody = typeof document !== "undefined" ? document.getElementById("studentTableBody") : null;
+const searchInput = typeof document !== "undefined" ? document.getElementById("searchInput") : null;
+const resetDataBtn = typeof document !== "undefined" ? document.getElementById("resetDataBtn") : null;
 
 function loadStudents() {
+  if (typeof localStorage === "undefined") {
+    return [...initialStudents];
+  }
+
   const saved = localStorage.getItem(storageKey);
 
   if (!saved) {
@@ -61,10 +65,13 @@ function loadStudents() {
 }
 
 function saveStudents() {
+  if (typeof localStorage === "undefined") return;
   localStorage.setItem(storageKey, JSON.stringify(students));
 }
 
 function renderStats() {
+  if (typeof document === "undefined") return;
+
   document.getElementById("totalStudents").textContent = students.length;
   document.getElementById("pendingTasks").textContent = students.filter(
     (student) => student.status === "Pending"
@@ -100,6 +107,8 @@ function matchSearch(student, query) {
 }
 
 function renderTable() {
+  if (!tableBody || !searchInput) return;
+
   const query = searchInput.value.trim().toLowerCase();
   const filteredStudents = students.filter((student) => matchSearch(student, query));
 
@@ -140,6 +149,8 @@ function renderTable() {
 }
 
 function resetForm() {
+  if (!form || !formTitle || !submitBtn || !cancelEditBtn) return;
+
   form.reset();
   editingId = null;
   formTitle.textContent = "Add New Student";
@@ -148,6 +159,8 @@ function resetForm() {
 }
 
 function fillForm(student) {
+  if (typeof document === "undefined") return;
+
   document.getElementById("studentId").value = student.studentId;
   document.getElementById("name").value = student.name;
   document.getElementById("course").value = student.course;
@@ -163,7 +176,11 @@ function fillForm(student) {
 }
 
 function handleSubmit(event) {
-  event.preventDefault();
+  if (typeof event !== "undefined") {
+    event.preventDefault();
+  }
+
+  if (typeof document === "undefined") return;
 
   const studentData = {
     studentId: document.getElementById("studentId").value.trim(),
@@ -197,6 +214,8 @@ function handleSubmit(event) {
 }
 
 function handleTableClick(event) {
+  if (typeof window === "undefined" || typeof event === "undefined") return;
+
   const target = event.target;
   if (!(target instanceof HTMLElement)) return;
 
@@ -233,18 +252,50 @@ function render() {
   renderTable();
 }
 
-form.addEventListener("submit", handleSubmit);
-searchInput.addEventListener("input", renderTable);
-resetDataBtn.addEventListener("click", () => {
-  const confirmed = window.confirm("Reset the demo data?");
-  if (!confirmed) return;
+if (form) {
+  form.addEventListener("submit", handleSubmit);
+}
+if (searchInput) {
+  searchInput.addEventListener("input", renderTable);
+}
+if (resetDataBtn) {
+  resetDataBtn.addEventListener("click", () => {
+    const confirmed = window.confirm("Reset the demo data?");
+    if (!confirmed) return;
 
-  students = [...initialStudents];
-  saveStudents();
-  resetForm();
+    students = [...initialStudents];
+    saveStudents();
+    resetForm();
+    render();
+  });
+}
+if (cancelEditBtn) {
+  cancelEditBtn.addEventListener("click", resetForm);
+}
+if (tableBody) {
+  tableBody.addEventListener("click", handleTableClick);
+}
+
+if (typeof document !== "undefined") {
   render();
-});
-cancelEditBtn.addEventListener("click", resetForm);
-tableBody.addEventListener("click", handleTableClick);
+}
 
-render();
+if (typeof module !== "undefined") {
+  module.exports = {
+    storageKey,
+    initialStudents,
+    students,
+    editingId,
+    loadStudents,
+    saveStudents,
+    renderStats,
+    isOverdue,
+    matchSearch,
+    renderTable,
+    resetForm,
+    fillForm,
+    handleSubmit,
+    handleTableClick,
+    render
+  };
+}

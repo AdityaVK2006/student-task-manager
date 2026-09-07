@@ -1,0 +1,19 @@
+{
+  "name": "student-task-manager",
+  "version": "1.0.0",
+  "description": "a simple project",
+  "main": "index.html",
+  "scripts": {
+    "test": "node --test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AdityaVK2006/student-task-manager.git"
+  },
+  "author": "Aditya",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/AdityaVK2006/student-task-manager/issues"
+  },
+  "homepage": "https://github.com/AdityaVK2006/student-task-manager#readme"
+}
