@@ -901,4 +901,4 @@ The long-term version could evolve into a full-stack platform where students, fa
 
 The current frontend implementation establishes the core task-management workflow, while future versions can introduce authentication, cloud storage, notifications, analytics, and multi-user collaboration.
 Student task Management web App 
-College Git Assignment for Dev Ops Lab
+
