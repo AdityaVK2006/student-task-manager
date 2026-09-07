@@ -20,7 +20,7 @@ const makeElement = () => ({
 global.localStorage = {
   store: {},
   getItem(key) {
-    return this.store[key] ?? null;
+    return Object.prototype.hasOwnProperty.call(this.store, key) ? this.store[key] : null;
   },
   setItem(key, value) {
     this.store[key] = value;
