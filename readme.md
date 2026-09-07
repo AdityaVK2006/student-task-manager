@@ -1,2 +1,2 @@
-Student task Management web Application 
-College Git Assignment
+Student task Management web App 
+College Git Assignment for Dev Ops Lab
