@@ -17,7 +17,13 @@ pipeline {
 
         stage('Test') {
             steps {
-                sh 'npm test'
+                sh 'npm test -- --runInBand'
+            }
+        }
+
+        stage('Test Cases') {
+            steps {
+                sh 'npm test -- --runInBand --testNamePattern="renders|adds|edits|deletes|filters"'
             }
         }
     }
